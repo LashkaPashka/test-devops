@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16.6
+    container_name: ${CONTAINER_NAME}_postgres
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATA: ${POSTGRES_DATA}
+    volumes:
+      - postgres_data:${POSTGRES_DATA}
+    networks:
+      - backend
+
+  api:
+    build: 
+      context: .
+      dockerfile: ./api/Dockerfile    
+    container_name: ${CONTAINER_NAME}_back
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - postgres
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: ./front/Dockerfile
+    container_name: ${CONTAINER_NAME}_front
+    ports:
+      - 80:80
+    networks:
+      - frontend
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

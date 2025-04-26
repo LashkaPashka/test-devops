@@ -1,0 +1,35 @@
+require('dotenv').config();
+const express = require('express');
+const { Pool } = require('pg');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+const pool = new Pool({
+    host: process.env.PGHOST,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE,
+    port: process.env.PGPORT,
+});
+
+app.get('/api/time', async (req, res) => {
+    console.log(process.env.PGHOST);
+    console.log(process.env.PGUSER);
+    console.log(process.env.PGPASSWORD);
+    console.log(process.env.PGDATABASE);
+    console.log(process.env.PGPORT);
+    
+    try {
+        const result = await pool.query('SELECT NOW()');
+        const currentTime = result.rows[0].now;
+        res.json({ time: currentTime });
+    } catch (err) {
+        console.error('Error fetching time:', err);
+        res.status(500).json({ error: 'Failed to fetch time' });
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
