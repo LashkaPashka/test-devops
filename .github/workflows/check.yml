@@ -21,12 +21,8 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t $FRONTEND_IMAGE:latest ./frontend
-          docker push $FRONTEND_IMAGE:latest
+          docker build -t front:latest ./front
 
       - name: Build and push Backend Docker image
         run: |
-          docker build -t $BACKEND_IMAGE:latest ./backend
-          docker push $BACKEND_IMAGE:latest
-          
-      
+          docker build -t back:latest ./api
