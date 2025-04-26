@@ -33,9 +33,9 @@ jobs:
 
     steps:
       - name: Send message
-        uses: aps-m/telegram-notify-action@v1
+        uses: appleboy/telegram-action@master
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_CHATID_TO }}
-          message: 'The build was successful!'
-          parse_mode: 'HTML'
+          message: |
+            The build was successful!
