@@ -14,12 +14,6 @@ const pool = new Pool({
 });
 
 app.get('/api/time', async (req, res) => {
-    console.log(process.env.PGHOST);
-    console.log(process.env.PGUSER);
-    console.log(process.env.PGPASSWORD);
-    console.log(process.env.PGDATABASE);
-    console.log(process.env.PGPORT);
-    
     try {
         const result = await pool.query('SELECT NOW()');
         const currentTime = result.rows[0].now;
@@ -29,6 +23,21 @@ app.get('/api/time', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch time' });
     }
 });
+
+app.get('/jsonplaceholder', async (req, res) => {
+    try {
+        const url = 'https://jsonplaceholder.typicode.com/posts';
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching data from JSONPlaceholder:', error);
+        res.status(500).json({ error: 'Failed to fetch data' });
+    }
+})
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
