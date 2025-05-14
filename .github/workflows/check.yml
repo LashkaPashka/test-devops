@@ -28,13 +28,13 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t ghcr.io/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
-          docker push ghcr.io/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
+          docker build -t $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
+          docker push $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
 
       - name: Build and push Backend Docker image
         run: |
-          docker build -t ghcr.io/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
-          docker push ghcr.io/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
+          docker build -t $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
+          docker push $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
   
   notify:
     runs-on: ubuntu-latest
