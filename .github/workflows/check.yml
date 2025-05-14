@@ -9,25 +9,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: set outputs
+        id: export
+        run: |
+          echo "user=lashkapashka" >> $GITHUB_OUTPUT
+          echo "front=test-devops-front" >> $GITHUB_OUTPUT
+          echo "api=test-devops-api" >> $GITHUB_OUTPUT
+
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: $NAME_REPO
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t ghcr.io/lashkapashka/test-devops-front:latest -f ./front/Dockerfile .
-          docker push ghcr.io/lashkapashka/test-devops-front:latest
+          docker build -t $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
+          docker push $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
 
       - name: Build and push Backend Docker image
         run: |
-          docker build -t ghcr.io/lashkapashka/test-devops-api:latest -f ./api/Dockerfile .
-          docker push ghcr.io/lashkapashka/test-devops-api:latest
+          docker build -t $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
+          docker push $NAME_REPO/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
   
   notify:
     runs-on: ubuntu-latest
