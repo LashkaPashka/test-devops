@@ -24,21 +24,6 @@ app.get('/api/time', async (req, res) => {
     }
 });
 
-app.get('/jsonplaceholder', async (req, res) => {
-    try {
-        const url = 'https://jsonplaceholder.typicode.com/posts';
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        res.json(data);
-    } catch (error) {
-        console.error('Error fetching data from JSONPlaceholder:', error);
-        res.status(500).json({ error: 'Failed to fetch data' });
-    }
-})
-
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

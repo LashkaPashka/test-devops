@@ -18,6 +18,12 @@ services:
       context: .
       dockerfile: ./api/Dockerfile    
     container_name: ${CONTAINER_NAME}_back
+    environment:
+      PGHOST: ${POSTGRES_HOST}
+      PGPORT: ${POSTGRES_PORT}
+      PGDATABASE: ${POSTGRES_DB}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGUSER: ${POSTGRES_USER}
     networks:
       - backend
       - frontend

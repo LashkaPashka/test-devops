@@ -17,15 +17,17 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GH_PAT }}
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t front:latest -f ./front/Dockerfile .
+          docker build . --tag ghcr.io/lashkapashka/test-devops-front:latest
+          docker push ghcr.io/lashkapashka/test-devops-front:latest
 
       - name: Build and push Backend Docker image
         run: |
-          docker build -t api:latest -f ./api/Dockerfile .
+          docker build . --tag ghcr.io/lashkapashka/test-devops-api:latest
+          docker push ghcr.io/lashkapashka/test-devops-api:latest
   
   notify:
     runs-on: ubuntu-latest

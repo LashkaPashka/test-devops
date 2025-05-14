@@ -6,7 +6,7 @@ EXPOSE 3000
 
 COPY ./api/package.json ./api/package-lock.json ./
 
-RUN npm install
+RUN npm ci && npm cache clean --force
 
 COPY ./api/ ./
 
