@@ -31,7 +31,7 @@ jobs:
           docker build -t ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
           docker push ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
 
-      - name: Build and push Backend Docker image
+      - name: Build and push Backend Docker imag
         run: |
           docker build -t ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
           docker push ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
