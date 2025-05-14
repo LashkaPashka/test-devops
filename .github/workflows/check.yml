@@ -33,7 +33,7 @@ jobs:
           docker build -t ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
           docker push ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
 
-      - name: Build and push Backend Docker imag
+      - name: Build and push Backend Docker image
         run: |
           docker build -t ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
           docker push ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
