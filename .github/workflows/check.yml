@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    env:
+      env_name_repo: ${{ vars.NAME_REPO }}
 
     steps:
       - name: set outputs
@@ -28,13 +30,13 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
-          docker push ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
+          docker build -t ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest -f ./front/Dockerfile .
+          docker push ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.front }}:latest
 
       - name: Build and push Backend Docker imag
         run: |
-          docker build -t ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
-          docker push ${{ vars.NAME_REPO }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
+          docker build -t ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest -f ./api/Dockerfile .
+          docker push ${{ env.env_name_repo }}/${{ steps.export.outputs.user }}/${{ steps.export.outputs.api }}:latest
   
   notify:
     runs-on: ubuntu-latest
