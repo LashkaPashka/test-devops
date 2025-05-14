@@ -21,12 +21,12 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build . --tag ghcr.io/lashkapashka/test-devops-front:latest
+          docker build . -t ghcr.io/lashkapashka/test-devops-front:latest
           docker push ghcr.io/lashkapashka/test-devops-front:latest
 
       - name: Build and push Backend Docker image
         run: |
-          docker build . --tag ghcr.io/lashkapashka/test-devops-api:latest
+          docker build . -t ghcr.io/lashkapashka/test-devops-api:latest
           docker push ghcr.io/lashkapashka/test-devops-api:latest
   
   notify:
